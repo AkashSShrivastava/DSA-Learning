@@ -25,4 +25,18 @@ public class Node {
         this.next = next;
         return this;
     }
+
+    public Node setNode(Node node) {
+        this.data = node.data;
+        this.next = null;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "data=" + data +
+                ", next=" + next +
+                '}';
+    }
 }
