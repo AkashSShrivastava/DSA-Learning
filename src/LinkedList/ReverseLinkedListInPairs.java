@@ -10,34 +10,40 @@ public class ReverseLinkedListInPairs {
         initializeList();
         //logic to reverse in pairs
         // 1->2->3->4-> null will become 2->1->4->3 -> null
-        Node temp = new Node(-1);
-        while(node.next!= null) {
-            temp = node; //1 2 3 4 //3 4
-            node = reverse(node);//2 1 3 4 null
-            temp.next = node; //1 2 1 3 4 null
-            if(node.next!=null)
-                node= node.next.next; //3 4 null
-            else
-                break;
+        Node newNode = node.next;
+        Node prev = null;
+        while(node!= null) {
+            Node second = node.next;
+            Node first = node;
+            if(second==null) {
+                second=first;
+                node = null;
+            } else {
+                Node n3 = node.next.next;
+                second.next = first;
+                first.next = n3;
+                node = n3;
+            }
         }
-        displayList(temp);
+
+        displayList(newNode);
     }
 
 
-
-    public static Node reverse(Node node) {
-        //1 2 3 4 null
-        Node temp = node; //1 2 3 4 null
-        temp.next = null; //1
-        node = node.next; //2 3 4 null
-        if(node==null)
-            return node;
-        Node temp2 = null;
-        if(node.next != null)
-            temp2 = node.next.next; //3 4 null
-        node.next = temp; //2 1
-        node.next.next = temp2; //2 1 3 4 null
-        return node;
+    public static Node reverseInPairs(Node head) {
+        if (head == null || head.next == null) return head;
+        Node newHead = head.next;
+        Node prev = null;
+        while (head != null && head.next != null) {
+            Node nextPair = head.next.next;
+            Node second = head.next;
+            second.next = head;
+            head.next = (nextPair != null && nextPair.next != null) ? nextPair.next : nextPair;
+            if (prev != null) prev.next = second;
+            prev = head;
+            head = nextPair;
+        }
+        return newHead;
     }
 
     public static void initializeList() {
