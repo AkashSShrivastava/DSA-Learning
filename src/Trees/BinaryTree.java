@@ -40,6 +40,38 @@ public class BinaryTree {
         System.out.println("Maximum element is:: "+maximumElement(tree, tree.data));
         System.out.println("Maximum element without recursion is:: "+maximumElementWithoutRecursion(tree, tree.data));
 
+        tree.sizeOfBinaryTree(tree);
+        System.out.println("Height of binary tree is:: "+tree.heightOfBinaryTree(tree));
+        System.out.println("Height of binary tree using recursion is:: "+tree.heightOfBinaryTreeRecursive(tree));
+    }
+
+    private int minimumHeightOfBinaryTree(BinaryTree root) {
+        if(root==null) {
+            return 0;
+        }
+        return 1+Math.min(minimumHeightOfBinaryTree(root.left), minimumHeightOfBinaryTree(root.right));
+    }
+
+    private int heightOfBinaryTreeRecursive(BinaryTree root) {
+        if(root==null) {
+            return 0;
+        }
+        return 1 + Math.max(heightOfBinaryTreeRecursive(root.left), heightOfBinaryTreeRecursive(root.right));
+    }
+
+    private int heightOfBinaryTree(BinaryTree root) {
+        int height = 0;
+        while(root!=null) {
+            height++;
+            if(root.left!=null) {
+                root = root.left;
+            } else if(root.right!=null) {
+                root = root.right;
+            } else {
+                return height;
+            }
+        }
+        return height;
     }
 
     private static int maximumElementWithoutRecursion(BinaryTree tree, int max) {
@@ -121,5 +153,26 @@ public class BinaryTree {
                 queue.add(current.right);
             }
         }
+    }
+
+
+    public void sizeOfBinaryTree(BinaryTree root) {
+        Queue<BinaryTree> queue = new LinkedList<>();
+        queue.add(root);
+
+        int size = 0;
+
+        while(!queue.isEmpty()) {
+            BinaryTree current = queue.poll();
+            size++;
+            if(current.left!=null) {
+                queue.add(current.left);
+            }
+            if(current.right!=null) {
+                queue.add(current.right);
+            }
+        }
+
+        System.out.println("Size of binary tree is:: "+size);
     }
 }
